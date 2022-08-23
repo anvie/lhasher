@@ -3,15 +3,15 @@
 //
 // This code is part of Leak Checker.
 //
-
-use std::io::{prelude::*, BufReader, LineWriter, Result};
-use std::{fs::File, path::Path};
-
 use sha2::{Digest, Sha256};
+use std::{
+    collections::BTreeSet,
+    fs::File,
+    io::{prelude::*, BufReader, LineWriter, Result},
+    path::Path,
+};
 
 use crate::parsers::Parser;
-
-use std::collections::BTreeSet;
 
 pub fn parse_file<P: Parser, PT: AsRef<Path>>(filename: PT, p: P) -> Result<()> {
     let file = File::open(filename)?;

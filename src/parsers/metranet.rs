@@ -6,8 +6,6 @@
 
 use std::io::Result;
 
-
-
 use crate::parsers::{GenT, GeneratorIteratorAdapter, Parser};
 
 pub struct MetranetLog {}

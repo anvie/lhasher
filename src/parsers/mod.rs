@@ -3,8 +3,6 @@
 //
 // This code is part of Leak Checker.
 //
-
-
 use std::io::Result;
 use std::ops::{Generator, GeneratorState};
 use std::pin::Pin;
