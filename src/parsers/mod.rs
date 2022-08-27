@@ -12,7 +12,6 @@ pub enum ParseStatus {
     Buffer(String),
     Ignored,
     BufferEnd(String),
-    Eof,
 }
 
 pub type ParseResult = Result<ParseStatus>;

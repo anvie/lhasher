@@ -4,7 +4,7 @@
 // This code is part of Leak Checker.
 //
 
-use std::{collections::HashMap, io::Result};
+use std::{collections::HashMap};
 
 use crate::parsers::{ParseResult, ParseStatus, Parser};
 
@@ -36,13 +36,14 @@ impl Parser for UniPancaDB {
 }
 
 lazy_static! {
-    static ref TABLE_NAMES: HashMap<&'static str, u32> = vec![
-        ("dosenskripsi", 2),
-        ("dosenttp", 2),
-        ("msdos", 2),
-        ("msmhs", 4),
-        ("tbdos", 7),
-        ("xangket_dosen", 3),
+    static ref TABLE_NAMES: HashMap<&'static str, Vec<u32>> = vec![
+        ("dosenskripsi", vec![2]),
+        ("dosenttp", vec![2]),
+        ("msdos", vec![2]),
+        ("msmhs", vec![4]),
+        ("tbdos", vec![7]),
+        ("xangket_dosen", vec![3]),
+        ("xmahasiswa", vec![2, 22]), // 2 = name, 22 = email
     ]
     .iter()
     .cloned()
@@ -64,21 +65,21 @@ impl UniPancaDB {
                 return ParseStatus::BufferEnd(_query.to_string());
             }
         }
-        match nom_sql::parser::parse_query(&query) {
+        match nom_sql::parser::parse_query(&_query) {
             Ok(parsed) => {
-                // println!("{} OK", &query);
-                // println!("parsed: {}", parsed);
                 self.in_buffer = false;
                 match parsed {
                     Insert(st) => {
-                        if let Some(col) = TABLE_NAMES.get(&st.table.name.as_str()) {
+                        if let Some(cols) = TABLE_NAMES.get(&st.table.name.as_str()) {
                             let mut names = vec![];
                             for item in st.data {
-                                if let Literal::String(value) = &item[*col as usize] {
-                                    // println!("item: {}", value);
-                                    let _value = normalize_name(value);
-                                    if _value.trim().len() > 0 {
-                                        names.push(_value);
+                                for col in cols {
+                                    if let Literal::String(value) = &item[*col as usize] {
+                                        // println!("item: {}", value);
+                                        let _value = normalize_name(value);
+                                        if _value.trim().len() > 0 {
+                                            names.push(_value.trim().to_string());
+                                        }
                                     }
                                 }
                             }
@@ -94,7 +95,6 @@ impl UniPancaDB {
                     return ParseStatus::Ignored;
                 }
                 self.in_buffer = true;
-                // ParseStatus::Eof //vec!["failed".to_string()].into_iter()
                 ParseStatus::Buffer(query.to_string())
             }
         }

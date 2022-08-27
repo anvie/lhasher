@@ -12,4 +12,4 @@ sha2 = "0.10"
 crc32fast = "1.3.2"
 regex = "1.6"
 lazy_static = "1.3"
-nom-sql = "0.0.11"
+nom-sql = { git = "https://github.com/anvie/nom-sql", branch = "master" }

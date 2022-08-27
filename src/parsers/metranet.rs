@@ -4,8 +4,6 @@
 // This code is part of Leak Checker.
 //
 
-use std::io::Result;
-
 use crate::parsers::{ParseResult, ParseStatus, Parser};
 
 pub struct MetranetLog {}
