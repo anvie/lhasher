@@ -4,7 +4,7 @@
 // This code is part of Leak Checker.
 //
 
-use std::{collections::HashMap};
+use std::collections::HashMap;
 
 use crate::parsers::{ParseResult, ParseStatus, Parser};
 
