@@ -4,9 +4,9 @@
 // This code is part of Leak Checker.
 //
 
-use std::{io::{Result}, ops::Generator};
+use std::io::Result;
 
-use crate::parsers::{Parser};
+use crate::parsers::{ParseResult, ParseStatus, Parser};
 
 pub struct MetranetLog {}
 
@@ -25,9 +25,9 @@ impl Parser for MetranetLog {
         "metranet"
     }
 
-    fn parse(line: &str) -> Result<Self::R> {
+    fn parse(&mut self, line: &str) -> ParseResult {
         let tokens = parse_internal(line);
-        Ok(tokens.into_iter())
+        Ok(tokens)
     }
 }
 
@@ -38,16 +38,16 @@ lazy_static! {
     // static ref RE_IP: regex::Regex = regex::Regex::new(r",(\d*\.\d*\.\d*\.\d*),").unwrap();
 }
 
-fn parse_internal(line: &str) -> <MetranetLog as Parser>::R {
+fn parse_internal(line: &str) -> ParseStatus {
     let line = line.to_string();
     let mut result = vec![];
-        if let Some(caps) = RE_NAME.captures(&line) {
-            let name = caps.get(1).unwrap().as_str();
-            result.push(name.to_string().to_lowercase());
-        }
-        if let Some(caps) = RE_NIK.captures(&line) {
-            let nik = caps.get(1).unwrap().as_str();
-            result.push(nik.to_string());
-        }
-    result.into_iter()
+    if let Some(caps) = RE_NAME.captures(&line) {
+        let name = caps.get(1).unwrap().as_str();
+        result.push(name.to_string().to_lowercase());
+    }
+    if let Some(caps) = RE_NIK.captures(&line) {
+        let nik = caps.get(1).unwrap().as_str();
+        result.push(nik.to_string());
+    }
+    ParseStatus::Ready(result.into_iter())
 }

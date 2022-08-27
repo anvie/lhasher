@@ -19,7 +19,7 @@
           "kind": "bin"
         }
       },
-      "args": ["-i", "../data/metranet_log.csv"],
+      "args": ["-i", "../data/univpancasila.sql", "-f", "unipanca"],
       "cwd": "${workspaceFolder}"
     },
     {

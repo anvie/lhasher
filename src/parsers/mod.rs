@@ -3,16 +3,26 @@
 //
 // This code is part of Leak Checker.
 //
-use std::io::Result;
-use std::ops::{Generator, GeneratorState};
-use std::pin::Pin;
+use std::{io::Result, vec::IntoIter};
+
+pub type Tokens = IntoIter<String>;
+
+pub enum ParseStatus {
+    Ready(Tokens),
+    Buffer(String),
+    Ignored,
+    BufferEnd(String),
+    Eof,
+}
+
+pub type ParseResult = Result<ParseStatus>;
 
 pub trait Parser {
-    type R = std::vec::IntoIter<String>;
+    // type R = ParseResult;
 
     fn name(&self) -> &'static str;
     fn file_out_name(&self) -> &'static str;
-    fn parse(line: &str) -> Result<Self::R>;
+    fn parse(&mut self, line: &str) -> ParseResult;
 }
 
 mod metranet;

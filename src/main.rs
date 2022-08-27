@@ -4,7 +4,7 @@
 // This code is part of Leak Checker.
 //
 
-#![feature(generators, generator_trait, type_alias_impl_trait)]
+// #![feature(generators, generator_trait, type_alias_impl_trait)]
 #![feature(associated_type_defaults)]
 
 extern crate clap;
@@ -39,7 +39,7 @@ fn main() {
                 .required(true)
                 .takes_value(true),
         )
-        .try_get_matches_from(vec!["prog", "--input", "file.txt"]);
+        .try_get_matches();
 
     if mc.is_err() {
         eprintln!("{}", mc.unwrap_err());
@@ -57,9 +57,13 @@ fn main() {
             println!("File to process: {}, format: {}", input_file, format);
 
             match format {
-                "metranetlog" => converter::parse_file(input_file, parsers::MetranetLog::new()).unwrap(),
-                // "unipanca" => converter::parse_file(input_file, parsers::UniPancaDB::new()).unwrap(),
-                x => eprintln!("Unknown format {}", x)
+                "metranetlog" => {
+                    converter::parse_file(input_file, parsers::MetranetLog::new()).unwrap()
+                }
+                "unipanca" => {
+                    converter::parse_file(input_file, parsers::UniPancaDB::new()).unwrap()
+                }
+                x => eprintln!("Unknown format {}", x),
             }
         }
     }
