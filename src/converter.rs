@@ -13,7 +13,12 @@ use std::{
 
 use crate::parsers::Parser;
 
-pub fn parse_file<P: Parser, PT: AsRef<Path>>(filename: PT, p: P) -> Result<()> {
+pub fn parse_file<PR, PT>(filename: PT, p: PR) -> Result<()>
+where
+    PR: Parser,
+    PT: AsRef<Path>,
+    <PR as Parser>::R: Iterator<Item=String>
+{
     let file = File::open(filename)?;
     let file_output = File::create(
         Path::new("../compiled_data")
@@ -32,7 +37,7 @@ pub fn parse_file<P: Parser, PT: AsRef<Path>>(filename: PT, p: P) -> Result<()> 
 
     for line in reader.lines() {
         let line = line?;
-        let tokens = P::parse(&line)?;
+        let tokens = PR::parse(&line)?;
         for token in tokens {
             let hash_str = hash(&token);
             let crc32_hash = crc32fast::hash(token.as_bytes());

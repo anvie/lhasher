@@ -5,6 +5,7 @@
 //
 
 #![feature(generators, generator_trait, type_alias_impl_trait)]
+#![feature(associated_type_defaults)]
 
 extern crate clap;
 #[macro_use]
@@ -26,13 +27,40 @@ fn main() {
                 .long("input")
                 .value_name("INPUT_FILE")
                 .help("Set input file")
+                .required(true)
                 .takes_value(true),
         )
-        .get_matches();
+        .arg(
+            Arg::with_name("format")
+                .short('f')
+                .long("format")
+                .value_name("FORMAT")
+                .help("Input format")
+                .required(true)
+                .takes_value(true),
+        )
+        .try_get_matches_from(vec!["prog", "--input", "file.txt"]);
 
-    let input_file = mc.value_of("input").unwrap_or("../data/metranet_log.csv");
+    if mc.is_err() {
+        eprintln!("{}", mc.unwrap_err());
+        return;
+    }
 
-    println!("File to process: {}", input_file);
+    match mc {
+        Err(e) => eprintln!("{}", e),
+        Ok(mc) => {
+            let input_file = mc
+                .value_of("input")
+                .unwrap_or_else(|| panic!("No input file"));
+            let format = mc.value_of("format").unwrap_or_else(|| panic!("No format"));
 
-    converter::parse_file(input_file, parsers::MetranetLog::new()).unwrap();
+            println!("File to process: {}, format: {}", input_file, format);
+
+            match format {
+                "metranetlog" => converter::parse_file(input_file, parsers::MetranetLog::new()).unwrap(),
+                // "unipanca" => converter::parse_file(input_file, parsers::UniPancaDB::new()).unwrap(),
+                x => eprintln!("Unknown format {}", x)
+            }
+        }
+    }
 }
