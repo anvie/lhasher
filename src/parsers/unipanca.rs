@@ -22,7 +22,7 @@ impl UniPancaDB {
 
 impl Parser for UniPancaDB {
     fn name(&self) -> &'static str {
-        "Universitas Pancasila DB"
+        "Universitas Pancasila"
     }
 
     fn file_out_name(&self) -> &'static str {
