@@ -16,5 +16,7 @@ pub trait Parser {
 }
 
 mod metranet;
+mod unipanca;
 
 pub use metranet::MetranetLog;
+pub use unipanca::UniPancaDB;
