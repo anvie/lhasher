@@ -75,10 +75,9 @@ impl UniPancaDB {
                             for item in st.data {
                                 for col in cols {
                                     if let Literal::String(value) = &item[*col as usize] {
-                                        // println!("item: {}", value);
-                                        let _value = normalize_name(value);
-                                        if _value.trim().len() > 0 {
-                                            names.push(_value.trim().to_string());
+                                        let _value = normalize_name(value).trim().to_lowercase();
+                                        if _value.len() > 0 {
+                                            names.push(_value);
                                         }
                                     }
                                 }
