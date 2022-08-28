@@ -63,6 +63,9 @@ fn main() {
                 "unipanca" => {
                     converter::parse_file(input_file, parsers::UniPancaDB::new()).unwrap()
                 }
+                "bhinneka" => {
+                    converter::parse_file(input_file, parsers::BhinnekaDB::new()).unwrap()
+                }
                 x => eprintln!("Unknown format {}", x),
             }
         }

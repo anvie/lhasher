@@ -196,6 +196,7 @@ dependencies = [
  "clap",
  "crc32fast",
  "lazy_static",
+ "nom 7.1.1",
  "nom-sql",
  "regex",
  "sha2",
@@ -214,6 +215,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2dffe52ecf27772e601905b7522cb4ef790d2cc203488bbd0e2fe85fcb74566d"
 
 [[package]]
+name = "minimal-lexical"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "68354c5c6bd36d73ff3feceb05efa59b6acb7626617f4962be322a825e61f79a"
+
+[[package]]
 name = "nom"
 version = "6.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -227,11 +234,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "nom"
+version = "7.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a8903e5a29a317527874d0402f867152a3d21c908bb0b933e416c65e301d4c36"
+dependencies = [
+ "memchr",
+ "minimal-lexical",
+]
+
+[[package]]
 name = "nom-sql"
 version = "0.0.11"
 source = "git+https://github.com/anvie/nom-sql?branch=master#90a668353c685ec00877ddb6a8de9b1f85608401"
 dependencies = [
- "nom",
+ "nom 6.1.2",
  "serde",
  "serde_derive",
 ]

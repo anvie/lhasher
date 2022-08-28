@@ -63,12 +63,15 @@ where
 
         if let Some(tokens) = buffered_tokens {
             for token in tokens {
+                if (token.is_empty()) {
+                    continue;
+                }
                 let hash_str = hash(&token);
                 let crc32_hash = crc32fast::hash(token.as_bytes());
                 if existing.contains(&crc32_hash) {
                     continue;
                 }
-                file_output_w.write_fmt(format_args!("\"{}\",\n", hash_str))?;
+                file_output_w.write_fmt(format_args!("\"{}\", // {}\n", hash_str, token))?;
                 existing.insert(crc32_hash);
                 i = i + 1;
                 if i % 500 == 0 {

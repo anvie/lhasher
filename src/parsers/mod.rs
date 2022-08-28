@@ -24,8 +24,10 @@ pub trait Parser {
     fn parse(&mut self, line: &str) -> ParseResult;
 }
 
+mod bhinneka;
 mod metranet;
 mod unipanca;
 
+pub use bhinneka::BhinnekaDB;
 pub use metranet::MetranetLog;
 pub use unipanca::UniPancaDB;
