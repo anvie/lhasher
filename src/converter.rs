@@ -71,7 +71,7 @@ where
                 if existing.contains(&crc32_hash) {
                     continue;
                 }
-                file_output_w.write_fmt(format_args!("\"{}\", // {}\n", hash_str, token))?;
+                file_output_w.write_fmt(format_args!("\"{}\",\n", hash_str))?;
                 existing.insert(crc32_hash);
                 i = i + 1;
                 if i % 500 == 0 {

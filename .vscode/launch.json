@@ -25,6 +25,24 @@
     {
       "type": "lldb",
       "request": "launch",
+      "name": "Debug bhinneka",
+      "cargo": {
+        "args": [
+          "build",
+          "--bin=lhasher",
+          "--package=lhasher"
+        ],
+        "filter": {
+          "name": "lhasher",
+          "kind": "bin"
+        }
+      },
+      "args": ["-i", "../data/bhinneka_users.sql", "-f", "bhinneka"],
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
       "name": "Debug unit tests in executable 'lhasher'",
       "cargo": {
         "args": [
