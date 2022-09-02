@@ -19,11 +19,8 @@ use std::{
     io::{self, prelude::*, BufReader, Result, SeekFrom},
 };
 
-
 pub mod converter;
 pub mod parsers;
-
-
 
 /// Lhash file reader.
 pub struct LhashReader {
@@ -69,7 +66,6 @@ impl LhashReader {
     }
 }
 
-
 #[inline(always)]
 fn hash(input: &str) -> u64 {
     let mut hasher = Fnv1a::<u64>::new();
@@ -85,7 +81,6 @@ fn to_bytes(input: u64) -> [u8; 8] {
     bytes
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -97,15 +92,107 @@ mod tests {
     }
 
     #[test]
-    fn test_file_format() {
+    fn test_lhash_file_format() {
         let mut reader = LhashReader::new("./tests/metranet.lhash").unwrap();
-        assert_eq!(reader.read().unwrap(), 0xd20bc4eb5e59dfa0);
-        assert_eq!(reader.read().unwrap(), 0xa25a625fcafd40c8);
-        assert_eq!(reader.read().unwrap(), 0x6238eb19db67870f);
-        assert_eq!(reader.read().unwrap(), 0xb6bd591c1688e715);
-        assert_eq!(reader.read().unwrap(), 0xbc3e204f95b2113f);
-        assert_eq!(reader.read().unwrap(), 0x39b1ff7fa764c6c1);
+        assert_eq!(reader.read().unwrap(), 0xD20BC4EB5E59DFA0);
+        assert_eq!(reader.read().unwrap(), 0xA25A625FCAFD40C8);
+        assert_eq!(reader.read().unwrap(), 0x6238EB19DB67870F);
+        assert_eq!(reader.read().unwrap(), 0xB6BD591C1688E715);
+        assert_eq!(reader.read().unwrap(), 0xBC3E204F95B2113F);
+        assert_eq!(reader.read().unwrap(), 0x39B1FF7FA764C6C1);
+        assert_eq!(reader.read().unwrap(), 0xB5B9262463820E04);
+        assert_eq!(reader.read().unwrap(), 0x7D6FFF5EEA103BB9);
+        assert_eq!(reader.read().unwrap(), 0x4157D773DBDED435);
+        assert_eq!(reader.read().unwrap(), 0xFB55DC657FEA308B);
+        assert_eq!(reader.read().unwrap(), 0xFCADC699EEB18B39);
+        assert_eq!(reader.read().unwrap(), 0x94041BF0A51975A8);
+        assert_eq!(reader.read().unwrap(), 0xB99F8110F3E68653);
+        assert_eq!(reader.read().unwrap(), 0x70C33CCEA260E70A);
+        assert_eq!(reader.read().unwrap(), 0xA54E00E1782E4C1B);
+        assert_eq!(reader.read().unwrap(), 0xDE0CAAB4D7758DE1);
+        assert_eq!(reader.read().unwrap(), 0xBBB658F46B1A631D);
+        assert_eq!(reader.read().unwrap(), 0x94227ACDD631EE9F);
+        assert_eq!(reader.read().unwrap(), 0x1C7BE5FD7FEB953A);
+        assert_eq!(reader.read().unwrap(), 0x21779E65D5C6756F);
+        assert_eq!(reader.read().unwrap(), 0xA14DA3397A36C671);
+        assert_eq!(reader.read().unwrap(), 0xEBE9A56CF0D4E483);
+        assert_eq!(reader.read().unwrap(), 0x729024B01ACD40FC);
+        assert_eq!(reader.read().unwrap(), 0x23A905DF1F63C74B);
+        assert_eq!(reader.read().unwrap(), 0xDDCF2A99BC97E58B);
+        assert_eq!(reader.read().unwrap(), 0xB57D539E2225B09);
+        assert_eq!(reader.read().unwrap(), 0xEABBF375C69716DB);
+        assert_eq!(reader.read().unwrap(), 0x478E206BA29E5512);
+        assert_eq!(reader.read().unwrap(), 0x9759F447ADF4C595);
+        assert_eq!(reader.read().unwrap(), 0xFE11758F6E9171E7);
+        assert_eq!(reader.read().unwrap(), 0x1C700E2906DA371A);
+        assert_eq!(reader.read().unwrap(), 0x74D81C17332A6D4C);
+        assert_eq!(reader.read().unwrap(), 0xF2E903B1CF925B5B);
+        assert_eq!(reader.read().unwrap(), 0x803D0A7D990C03A5);
+        assert_eq!(reader.read().unwrap(), 0xC94AFFC97A939C97);
+        assert_eq!(reader.read().unwrap(), 0x762FE1956C83CB6F);
+        assert_eq!(reader.read().unwrap(), 0x8CD79878F310B837);
+        assert_eq!(reader.read().unwrap(), 0xD0C89CD3D6BC4C1F);
+        assert_eq!(reader.read().unwrap(), 0x2582AB19B8FF189F);
+        assert_eq!(reader.read().unwrap(), 0xA0A16E78DEDEA639);
+        assert_eq!(reader.read().unwrap(), 0x246F734EE6AE8713);
+        assert_eq!(reader.read().unwrap(), 0xE5DED676F9625B2D);
+        assert_eq!(reader.read().unwrap(), 0x9037E0B82005450C);
+        assert_eq!(reader.read().unwrap(), 0xB29EA71EC42B4424);
+        assert_eq!(reader.read().unwrap(), 0xB741F3B4539256D1);
+        assert_eq!(reader.read().unwrap(), 0x51282BC32277F63C);
+        assert_eq!(reader.read().unwrap(), 0x3E7B5F0C0AA975E8);
+        assert_eq!(reader.read().unwrap(), 0xE5745F73A083BD31);
+        assert_eq!(reader.read().unwrap(), 0x7E8B2F33563B9D44);
+        assert_eq!(reader.read().unwrap(), 0x9992EA946B440BAD);
+        assert_eq!(reader.read().unwrap(), 0xA7856430FF81B472);
+        assert_eq!(reader.read().unwrap(), 0xC414F1598FCD0C51);
+        assert_eq!(reader.read().unwrap(), 0x1A64CE982E0FDFBA);
+        assert_eq!(reader.read().unwrap(), 0x9EB61535B0DF450A);
+        assert_eq!(reader.read().unwrap(), 0x925E966BE06656FF);
+        assert_eq!(reader.read().unwrap(), 0xAB51E86C5C47994C);
+        assert_eq!(reader.read().unwrap(), 0x11543B5A56AF2DE);
+        assert_eq!(reader.read().unwrap(), 0xDA1573CCD5D3C34E);
+        assert_eq!(reader.read().unwrap(), 0xFA1AFE19A0621675);
+        assert_eq!(reader.read().unwrap(), 0xC6848277E3243EF6);
+        assert_eq!(reader.read().unwrap(), 0x2DEF3AC8231AEA3D);
+        assert_eq!(reader.read().unwrap(), 0x8B71480A8B0DBB42);
+        assert_eq!(reader.read().unwrap(), 0xF3148F6D0F3E41AB);
+        assert_eq!(reader.read().unwrap(), 0x6C442816B2112590);
+        assert_eq!(reader.read().unwrap(), 0xFCB43FDD93D96195);
+        assert_eq!(reader.read().unwrap(), 0xAA13B27B4754CC9F);
+        assert_eq!(reader.read().unwrap(), 0x2FA8D619BF2A946A);
+        assert_eq!(reader.read().unwrap(), 0x8EF5076FAFD7DE8B);
+        assert_eq!(reader.read().unwrap(), 0x2FA4EE19BF26D45B);
+        assert_eq!(reader.read().unwrap(), 0x8EE2048DE60FA835);
+        assert_eq!(reader.read().unwrap(), 0xA0C67E1B3209EB02);
+        assert_eq!(reader.read().unwrap(), 0xF8B1784DDB5158A4);
+        assert_eq!(reader.read().unwrap(), 0xC0BFF3AF5A2EC50F);
+        assert_eq!(reader.read().unwrap(), 0xEBE36EAAF1604FBC);
+        assert_eq!(reader.read().unwrap(), 0xBDACB43057638A89);
+        assert_eq!(reader.read().unwrap(), 0x9C47E6293B5D3AEA);
+        assert_eq!(reader.read().unwrap(), 0xDB42891923249A4C);
+        assert_eq!(reader.read().unwrap(), 0xFA20EA4FDD63BFA8);
+        assert_eq!(reader.read().unwrap(), 0x83C2B9DED60DE9A0);
+        assert_eq!(reader.read().unwrap(), 0xA7E91DDB8A3B95C6);
+        assert_eq!(reader.read().unwrap(), 0x2F04F954F5595CA7);
+        assert_eq!(reader.read().unwrap(), 0xECBAB8E52883143C);
+        assert_eq!(reader.read().unwrap(), 0xF383954E5E13ED19);
+        assert_eq!(reader.read().unwrap(), 0xA29B59FF2F8245BC);
+        assert_eq!(reader.read().unwrap(), 0x62E238B6D9D5C588);
+        assert_eq!(reader.read().unwrap(), 0xF03E60F048C2593D);
+        assert_eq!(reader.read().unwrap(), 0xFA5F0019A09BE6A7);
+        assert_eq!(reader.read().unwrap(), 0x199C2CB40D12C1DF);
+        assert_eq!(reader.read().unwrap(), 0x66D5848E6FA4D03);
+        assert_eq!(reader.read().unwrap(), 0xFFC9E92F50B02F8);
+        assert_eq!(reader.read().unwrap(), 0x4290DE4FB85044FA);
+        assert_eq!(reader.read().unwrap(), 0x91E836993F23A8D8);
+        assert_eq!(reader.read().unwrap(), 0x3607481FC5CA9A10);
+        assert_eq!(reader.read().unwrap(), 0x55B7830EC5ADA781);
+        assert_eq!(reader.read().unwrap(), 0x50E4B798EEF28A19);
+        assert_eq!(reader.read().unwrap(), 0xC122608FFAB5C7D8);
+        assert_eq!(reader.read().unwrap(), 0xA7B7A52DAE7B3013);
+        assert_eq!(reader.read().unwrap(), 0xBBD5074FAF9FA6B3);
+        assert_eq!(reader.read().unwrap(), 0xA6603D6D7AB51439);
+        assert_eq!(reader.read().unwrap(), 0x41F07E206C164640);
     }
 }
-
-
