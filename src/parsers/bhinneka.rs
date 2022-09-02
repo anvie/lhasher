@@ -14,7 +14,7 @@ use crate::parsers::{ParseResult, ParseStatus, Parser};
 use nom::{
     bytes::complete::{tag, take_while},
     character::{
-        is_alphanumeric, is_digit,
+        is_alphanumeric,
         streaming::char,
     },
     sequence::{tuple}, IResult,
@@ -134,10 +134,6 @@ impl BhinnekaDB {
     }
 }
 
-#[inline(always)]
-fn sp(i: &[u8]) -> IResult<&[u8], char> {
-    char(' ')(i)
-}
 
 #[inline(always)]
 fn tab(i: &[u8]) -> IResult<&[u8], char> {
@@ -164,7 +160,7 @@ fn email(i: &[u8]) -> IResult<&[u8], &[u8]> {
     take_while(|c| is_alphanumeric(c) || b"@._".contains(&c))(i)
 }
 
-#[inline(always)]
-fn phone(i: &[u8]) -> IResult<&[u8], &[u8]> {
-    take_while(|c| is_digit(c) || c == '-' as u8)(i)
-}
+// #[inline(always)]
+// fn phone(i: &[u8]) -> IResult<&[u8], &[u8]> {
+//     take_while(|c| is_digit(c) || c == '-' as u8)(i)
+// }

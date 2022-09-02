@@ -7,19 +7,19 @@
     {
       "type": "lldb",
       "request": "launch",
-      "name": "Debug executable 'lhasher'",
+      "name": "Debug metranet",
       "cargo": {
         "args": [
           "build",
-          "--bin=lhasher",
+          "--bin=lhasher-cli",
           "--package=lhasher"
         ],
         "filter": {
-          "name": "lhasher",
+          "name": "lhasher-cli",
           "kind": "bin"
         }
       },
-      "args": ["-i", "../data/univpancasila.sql", "-f", "unipanca"],
+      "args": ["-i", "../data/metranet_log.csv", "-f", "metranetlog"],
       "cwd": "${workspaceFolder}"
     },
     {

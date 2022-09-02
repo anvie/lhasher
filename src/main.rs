@@ -8,13 +8,9 @@
 #![feature(associated_type_defaults)]
 
 extern crate clap;
-#[macro_use]
-extern crate lazy_static;
 
+use lhasher::*;
 use clap::{App, Arg};
-
-mod converter;
-mod parsers;
 
 fn main() {
     let mc = App::new("lhasher")

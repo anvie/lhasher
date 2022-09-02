@@ -41,7 +41,7 @@ fn parse_internal(line: &str) -> ParseStatus {
     let mut result = vec![];
     if let Some(caps) = RE_NAME.captures(&line) {
         let name = caps.get(1).unwrap().as_str();
-        result.push(name.to_string().to_lowercase());
+        result.push(name.to_string().to_uppercase());
     }
     if let Some(caps) = RE_NIK.captures(&line) {
         let nik = caps.get(1).unwrap().as_str();
