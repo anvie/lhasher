@@ -63,7 +63,7 @@ where
 
         if let Some(tokens) = buffered_tokens {
             for token in tokens {
-                if (token.is_empty()) {
+                if token.is_empty() {
                     continue;
                 }
                 let hash_str = hash(&token);

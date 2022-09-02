@@ -6,21 +6,18 @@
 
 use std::{
     collections::HashMap,
-    io::{self, ErrorKind},
     str,
 };
 
 use crate::parsers::{ParseResult, ParseStatus, Parser};
 
 use nom::{
-    bytes::complete::{tag, take, take_while},
+    bytes::complete::{tag, take_while},
     character::{
-        is_alphabetic, is_alphanumeric, is_digit, is_hex_digit, is_oct_digit, is_space,
+        is_alphanumeric, is_digit,
         streaming::char,
     },
-    error::ParseError,
-    sequence::{delimited, tuple},
-    Err, IResult, Needed,
+    sequence::{tuple}, IResult,
 };
 
 pub struct BhinnekaDB {
@@ -109,7 +106,7 @@ impl BhinnekaDB {
         if self.capture_mode {
             let (input, _) = take_while::<_, _, ()>(|c| c != 0x09u8 as char)(_q)?;
             let (input, _) = take_while::<_, _, ()>(|c| c == 0x09u8 as char)(input)?;
-            let (input, (first_name, _, last_name, _, email, _, _, _, phone)) =
+            let (_input, (first_name, _, last_name, _, email, _, _, _, phone)) =
                 tuple((
                     person_name,
                     tab,
