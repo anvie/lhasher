@@ -11,10 +11,10 @@ use std::{
     path::Path,
 };
 
+use lhash::{hash, to_bytes};
+
 use crate::{
-    hash,
     parsers::{ParseStatus::*, Parser, Tokens},
-    to_bytes,
 };
 
 pub fn parse_file<PR, PT>(filename: PT, mut p: PR) -> Result<()>
@@ -76,7 +76,7 @@ where
 
                 file_output.write(&to_bytes(a_hash))?;
 
-                i += 1;
+                i = i + 1;
                 if i % 10_000 == 0 {
                     println!("{} -> {} - exists: {}", token, a_hash, existing.len());
                     file_output.flush()?;
