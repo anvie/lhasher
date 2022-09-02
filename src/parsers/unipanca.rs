@@ -59,11 +59,9 @@ impl UniPancaDB {
         if _query.starts_with("--") || _query.starts_with("/*") {
             return ParseStatus::Ignored;
         }
-        if _query.ends_with(";") {
-            if self.in_buffer {
-                self.in_buffer = false;
-                return ParseStatus::BufferEnd(_query.to_string());
-            }
+        if _query.ends_with(';') && self.in_buffer {
+            self.in_buffer = false;
+            return ParseStatus::BufferEnd(_query.to_string());
         }
         match nom_sql::parser::parse_query(&_query) {
             Ok(parsed) => {
@@ -76,7 +74,7 @@ impl UniPancaDB {
                                 for col in cols {
                                     if let Literal::String(value) = &item[*col as usize] {
                                         let _value = normalize_name(value).trim().to_lowercase();
-                                        if _value.len() > 0 {
+                                        if !_value.is_empty() {
                                             names.push(_value);
                                         }
                                     }
@@ -84,13 +82,13 @@ impl UniPancaDB {
                             }
                             return ParseStatus::Ready(names.into_iter());
                         }
-                        return ParseStatus::Ignored;
+                        ParseStatus::Ignored
                     }
-                    _ => return ParseStatus::Ignored,
+                    _ => ParseStatus::Ignored,
                 }
             }
             Err(_) => {
-                if _query.ends_with(";") {
+                if _query.ends_with(';') {
                     return ParseStatus::Ignored;
                 }
                 self.in_buffer = true;
@@ -102,6 +100,6 @@ impl UniPancaDB {
 
 // remove titles
 #[inline(always)]
-fn normalize_name(name: &String) -> String {
+fn normalize_name(name: &str) -> String {
     name.chars().take_while(|c| *c != ',').collect()
 }

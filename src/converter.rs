@@ -76,7 +76,7 @@ where
 
                 file_output.write(&to_bytes(a_hash))?;
 
-                i = i + 1;
+                i += 1;
                 if i % 10_000 == 0 {
                     println!("{} -> {} - exists: {}", token, a_hash, existing.len());
                     file_output.flush()?;

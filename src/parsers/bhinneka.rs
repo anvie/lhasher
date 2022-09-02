@@ -45,9 +45,9 @@ impl Parser for BhinnekaDB {
 
     fn parse(&mut self, line: &str) -> ParseResult {
         if let Ok(result) = self.parse_internal(line.to_string()) {
-            return Ok(result);
+            Ok(result)
         } else {
-            return Ok(ParseStatus::Ignored);
+            Ok(ParseStatus::Ignored)
         }
     }
 }
@@ -88,11 +88,9 @@ impl BhinnekaDB {
         if _q.starts_with("--") || _q.starts_with("/*") {
             return Err(Error::InputError);
         }
-        if _q.ends_with(";") {
-            if self.in_buffer {
-                self.in_buffer = false;
-                return Ok(ParseStatus::BufferEnd(_q.to_string()));
-            }
+        if _q.ends_with(';') && self.in_buffer {
+            self.in_buffer = false;
+            return Ok(ParseStatus::BufferEnd(_q.to_string()));
         }
 
         if !self.capture_mode {
@@ -124,13 +122,13 @@ impl BhinnekaDB {
             let last_name = str::from_utf8(last_name).unwrap().trim().to_lowercase();
 
             rv.push(format!("{} {}", first_name, last_name));
-            rv.push(str::from_utf8(&email).unwrap().to_string());
-            rv.push(str::from_utf8(&phone).unwrap().to_string());
+            rv.push(str::from_utf8(email).unwrap().to_string());
+            rv.push(str::from_utf8(phone).unwrap().to_string());
 
             return Ok(ParseStatus::Ready(rv.into_iter()));
         }
 
-        return Ok(ParseStatus::Ignored);
+        Ok(ParseStatus::Ignored)
     }
 }
 
@@ -152,7 +150,7 @@ fn token(i: &[u8]) -> IResult<&[u8], &[u8]> {
 
 #[inline(always)]
 fn person_name(i: &[u8]) -> IResult<&[u8], &[u8]> {
-    take_while(|c| is_alphanumeric(c) || c == ' ' as u8)(i)
+    take_while(|c| is_alphanumeric(c) || c == b' ')(i)
 }
 
 #[inline(always)]
