@@ -4,9 +4,6 @@
 // This code is part of Leak Checker.
 //
 
-// #![feature(generators, generator_trait, type_alias_impl_trait)]
-#![feature(associated_type_defaults)]
-
 use byteorder::ByteOrder;
 use byteorder::{LittleEndian, WriteBytesExt};
 use lz_fnv::{Fnv1a, FnvHasher};

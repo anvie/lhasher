@@ -17,8 +17,6 @@ pub enum ParseStatus {
 pub type ParseResult = Result<ParseStatus>;
 
 pub trait Parser {
-    // type R = ParseResult;
-
     fn name(&self) -> &'static str;
     fn file_out_name(&self) -> &'static str;
     fn parse(&mut self, line: &str) -> ParseResult;
@@ -27,6 +25,8 @@ pub trait Parser {
 mod bhinneka;
 mod metranet;
 mod unipanca;
+mod plats;
+mod util;
 
 pub use bhinneka::BhinnekaDB;
 pub use metranet::MetranetLog;

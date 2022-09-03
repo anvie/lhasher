@@ -141,6 +141,7 @@ dependencies = [
 [[package]]
 name = "lhash"
 version = "0.1.0"
+source = "git+https://github.com/anvie/lhash?branch=master#2495daa9db41c44f33641aa00e5a7c1272ee0677"
 dependencies = [
  "byteorder",
  "lz_fnv",
